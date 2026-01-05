@@ -1,4 +1,5 @@
 name: "Vprofile IAC"
+
 on:
   push:
     branches:
@@ -31,13 +32,15 @@ jobs:
          working-directory: ./terraform
 
      steps:
+       # Checkout source code
        - name: Checkout source code 
          uses: actions/checkout@v4
 
+       # Setup Terraform with specified version on the runner
        - name: Setup Terraform with specified version on the runner
          uses: hashicorp/setup-terraform@v2
-         #with:
-         #  terraform_version: 1.6.3
+         with:
+           terraform_version: 1.6.6   # FIXED VERSION
 
        - name: Terraform init
          id: init
@@ -58,4 +61,4 @@ jobs:
 
        - name: Terraform plan status
          if: steps.plan.outcome == 'failure' 
-         run: exit 1     
+         run: exit 1
